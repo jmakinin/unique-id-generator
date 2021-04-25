@@ -12,6 +12,7 @@ class Generate{
      * 
      * @param $column_name String - the name of the column to fetch the data from
      * 
+     * @param $pad_value Integer - specifies the number of values of ID after prefix
      */
 
     function __construct(){
@@ -20,7 +21,7 @@ class Generate{
         
     }
 
-    function generate ( $table_name, $prefix_, $column_name ){
+    function generate ( $table_name, $prefix_, $column_name, $pad_value = 5 ){
 
 
         $sql = "SELECT COUNT('$column_name') as mk FROM $table_name";
@@ -42,7 +43,7 @@ class Generate{
                 $new_id = (int)$last_value + 1;
             }
 
-        $new_id = $prefix_.(str_pad(($new_id), 5, "0", STR_PAD_LEFT));
+        $new_id = $prefix_.(str_pad(($new_id), $pad_value, "0", STR_PAD_LEFT));
 
     return $new_id;	
     }
@@ -52,4 +53,4 @@ class Generate{
 $instantiate = new Generate();
 
 
-echo $instantiate->generate('members_data', 'OFBCM', 'member_id');
+echo $instantiate->generate('members_data', 'OFBCM', 'member_id', 5);
